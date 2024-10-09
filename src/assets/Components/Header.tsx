@@ -1,0 +1,24 @@
+import styled from "styled-components";
+
+const Header = () => {
+  return (
+    <HeaderStyle>
+      <img src="/public/logo.png" alt="로고" />
+      <h1>피파온라인4 파칭코 시뮬레이터</h1>
+    </HeaderStyle>
+  );
+};
+
+const HeaderStyle = styled.header`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 1rem;
+
+  img {
+    width: 2.25rem;
+    margin-right: 1rem;
+  }
+`;
+
+export default Header;
