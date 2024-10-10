@@ -7,6 +7,12 @@ interface BoardProps {
   onClick: (x: number, y: number) => void;
 }
 
+const backgroundColor = {
+  7: "#14423D",
+  5: "#612533",
+  4: "#674600",
+};
+
 const Board = ({ board, revealed, onClick }: BoardProps) => {
   let color = "";
   if (board.length === 7) color = "blue";
@@ -36,8 +42,11 @@ const Board = ({ board, revealed, onClick }: BoardProps) => {
 const BoardStyle = styled.div<{ size: number }>`
   display: grid;
   grid-template-columns: repeat(${({ size }) => size}, 1fr);
-  grid-gap: 10px;
-  margin-top: 20px;
+  grid-gap: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 1rem;
+  background-color: ${({ size }) =>
+    backgroundColor[size as keyof typeof backgroundColor]};
 `;
 
 export default Board;
