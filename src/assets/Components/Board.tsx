@@ -7,7 +7,7 @@ interface BoardProps {
   onClick: (x: number, y: number) => void;
 }
 
-const Board = ({ board, revealed }: BoardProps) => {
+const Board = ({ board, revealed, onClick }: BoardProps) => {
   let color = "";
   if (board.length === 7) color = "blue";
   else if (board.length === 5) color = "red";
@@ -22,6 +22,9 @@ const Board = ({ board, revealed }: BoardProps) => {
               idx={rowIdx * board.length + (colIdx + 1)}
               revealed={revealed[rowIdx][colIdx]}
               color={color}
+              onClick={() => {
+                onClick(rowIdx, colIdx);
+              }}
             />
           );
         });

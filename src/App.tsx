@@ -25,8 +25,6 @@ function App() {
     Array.from({ length: 7 }, () => Array.from({ length: 7 }, () => false))
   );
 
-  type RevealBoardType = revealed4 | revealed5 | revealed7;
-
   const clickCellHandler4 = (x: number, y: number) => {
     setRevealed4((prevReveald) => {
       const newRevealed = [...prevReveald];
@@ -55,9 +53,24 @@ function App() {
   };
 
   const resetBoard = () => {
-    if (activeTab === 7) setBoard7(createBoard(7));
-    if (activeTab === 5) setBoard5(createBoard(5));
-    if (activeTab === 4) setBoard4(createBoard(4));
+    if (activeTab === 7) {
+      setBoard7(createBoard(7));
+      setRevealed7(
+        Array.from({ length: 7 }, () => Array.from({ length: 7 }, () => false))
+      );
+    }
+    if (activeTab === 5) {
+      setBoard5(createBoard(5));
+      setRevealed5(
+        Array.from({ length: 5 }, () => Array.from({ length: 5 }, () => false))
+      );
+    }
+    if (activeTab === 4) {
+      setBoard4(createBoard(4));
+      setRevealed4(
+        Array.from({ length: 4 }, () => Array.from({ length: 4 }, () => false))
+      );
+    }
   };
 
   return (

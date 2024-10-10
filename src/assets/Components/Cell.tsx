@@ -1,10 +1,15 @@
 import styled from "styled-components";
 
+import son from "../../../public/son.png";
+import papa from "../../../public/papa.png";
+import mom from "../../../public/mom.png";
+
 interface CellProps {
   value: string;
   idx: number;
   revealed: boolean;
   color: string;
+  onClick: () => void;
 }
 
 const colors = {
@@ -13,25 +18,64 @@ const colors = {
   yellow: "#895800",
 };
 
+const valueColors = {
+  SSS: "#FF4696",
+  SS: "#8237CD",
+  S: "#437AFF",
+  A: "#319127",
+  B: "#C46623",
+  C: "#676767",
+};
+
+const backgroundImages = {
+  blue: papa,
+  red: mom,
+  yellow: son,
+};
+
 type colorType = "blue" | "red" | "yellow";
 
-const Cell = ({ value, idx, revealed, color }: CellProps) => {
+const Cell = ({ value, idx, revealed, color, onClick }: CellProps) => {
   const colorValue: colorType = color as colorType;
 
   return revealed ? (
-    <CellStyle color={colorValue}>{value}</CellStyle>
+    <CellStyle color={colorValue} revealed={revealed} value={value}>
+      {value}
+    </CellStyle>
   ) : (
-    <CellStyle color={colorValue}>{idx}</CellStyle>
+    <CellStyle onClick={onClick} color={colorValue}>
+      {idx}
+    </CellStyle>
   );
 };
 
-const CellStyle = styled.div<{ color: colorType }>`
-  width: 80px;
-  height: 80px;
+const CellStyle = styled.div<{
+  color: colorType;
+  revealed?: boolean;
+  value?: string;
+}>`
+  width: 5rem;
+  height: 5rem;
   display: flex;
-  align-items: center;
+  border-radius: 1rem;
+  align-items: ${({ revealed }) => (revealed ? "center" : "end")};
   justify-content: center;
-  background-color: ${({ color }) => colors[color]};
+  color: ${({ value }) => (value ? "white" : "black")};
+
+  background-color: ${({ color, value }) =>
+    value
+      ? valueColors[value as keyof typeof valueColors] || colors[color]
+      : colors[color]};
+
+  font-size: ${({ value }) => (value ? "2.5rem" : "2.25rem")};
+  font-weight: 800;
+  cursor: ${({ revealed }) => (revealed ? "default" : "pointer")};
+
+  background-image: ${({ revealed, color }) =>
+    revealed ? "none" : `url(${backgroundImages[color]})`};
+
+  background-size: cover;
+  background-position: center;
 `;
 
 export default Cell;
