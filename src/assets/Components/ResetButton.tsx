@@ -18,6 +18,7 @@ const ResetButtonStyle = styled.button`
   border: none;
   border-radius: 0.25rem;
   color: black;
+  cursor: pointer;
 `;
 
 export default ResetButton;
