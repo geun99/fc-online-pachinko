@@ -9,7 +9,7 @@ interface TabProps {
 const Tab = ({ isActive, handleTabActive, label }: TabProps) => {
   return (
     <TabStyle isActive={isActive} onClick={handleTabActive}>
-      {label + "X" + label}
+      {label + " X " + label}
     </TabStyle>
   );
 };

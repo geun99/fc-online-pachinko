@@ -18,7 +18,7 @@ const colors = {
   yellow: "#895800",
 };
 
-const valueColors = {
+export const valueColors = {
   SSS: "#FF4696",
   SS: "#8237CD",
   S: "#437AFF",
@@ -31,6 +31,12 @@ const backgroundImages = {
   blue: papa,
   red: mom,
   yellow: son,
+};
+
+const cellSize = {
+  blue: "5rem",
+  red: "7.25rem",
+  yellow: "9.2195rem",
 };
 
 type colorType = "blue" | "red" | "yellow";
@@ -54,8 +60,8 @@ const CellStyle = styled.div<{
   revealed?: boolean;
   value?: string;
 }>`
-  width: 5rem;
-  height: 5rem;
+  width: ${({ color }) => cellSize[color]};
+  height: ${({ color }) => cellSize[color]};
   display: flex;
   border-radius: 1rem;
   align-items: ${({ revealed }) => (revealed ? "center" : "end")};
@@ -67,8 +73,14 @@ const CellStyle = styled.div<{
       ? valueColors[value as keyof typeof valueColors] || colors[color]
       : colors[color]};
 
-  font-size: ${({ value }) => (value ? "2.5rem" : "2.25rem")};
-  font-weight: 800;
+  font-size: ${({ color, value }) => {
+    if (color === "blue") return value ? "2.5rem" : "2.25rem";
+    if (color === "red") return value ? "3.75rem" : "2.5rem";
+    if (color === "yellow") return value ? "4.75rem" : "3.25rem";
+    return "2rem";
+  }};
+
+  font-weight: bold;
   cursor: ${({ revealed }) => (revealed ? "default" : "pointer")};
 
   background-image: ${({ revealed, color }) =>

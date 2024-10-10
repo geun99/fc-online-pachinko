@@ -15,7 +15,7 @@ const Board = ({ board, revealed, onClick }: BoardProps) => {
   return (
     <BoardStyle size={board.length}>
       {board.map((row, rowIdx) => {
-        return row.map((col, colIdx) => {
+        return row.map((_, colIdx) => {
           return (
             <Cell
               value={board[rowIdx][colIdx]}

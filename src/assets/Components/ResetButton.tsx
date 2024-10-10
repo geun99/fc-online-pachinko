@@ -2,10 +2,11 @@ import styled from "styled-components";
 
 interface resetButtonProps {
   onClick: () => void;
+  value: string;
 }
 
-const ResetButton = ({ onClick }: resetButtonProps) => {
-  return <ResetButtonStyle onClick={onClick}>빙고판 초기화</ResetButtonStyle>;
+const ResetButton = ({ onClick, value }: resetButtonProps) => {
+  return <ResetButtonStyle onClick={onClick}>{value}</ResetButtonStyle>;
 };
 
 const ResetButtonStyle = styled.button`
