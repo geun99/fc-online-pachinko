@@ -22,6 +22,7 @@ const TabStyle = styled.button<{ isActive: boolean }>`
   background-color: ${({ isActive }) => (isActive ? "green" : "gray")};
   border: none;
   border-radius: 0.25rem;
+  cursor: pointer;
 `;
 
 export default Tab;
