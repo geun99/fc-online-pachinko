@@ -15,8 +15,9 @@ FC Online의 웹상점 "토끼 가족 송편 가게"의 시뮬레이터를 구�
 - N x N 배열에 랜덤으로 보상을 생성하는 배열 생성
 
 ## 정보 출처
-- [FC Online 웹상점]([https://maple.inven.co.kr](https://shop.fconline.nexon.com/Events/240829/TheThreeRabbit))
+- [FC Onlie 웹상점](https://shop.fconline.nexon.com/Events/240829/TheThreeRabbit)
 
+## 사이트 이미지
 ![image](https://github.com/user-attachments/assets/8ce19011-6534-4a5a-a75a-d74839644add)
 
 
