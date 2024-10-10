@@ -22,44 +22,27 @@ export interface RewardType {
 function App() {
   const [activeTab, setActiveTab] = useState<tabType>(7);
 
-  const [Board4, setBoard4] = useState<string[][]>(createBoard(4));
-  const [Board5, setBoard5] = useState<string[][]>(createBoard(5));
-  const [Board7, setBoard7] = useState<string[][]>(createBoard(7));
-
-  const [revealed4, setRevealed4] = useState<boolean[][]>(
-    Array.from({ length: 4 }, () => Array.from({ length: 4 }, () => false))
-  );
-  const [revealed5, setRevealed5] = useState<boolean[][]>(
-    Array.from({ length: 5 }, () => Array.from({ length: 5 }, () => false))
-  );
-  const [revealed7, setRevealed7] = useState<boolean[][]>(
-    Array.from({ length: 7 }, () => Array.from({ length: 7 }, () => false))
-  );
-
-  const [remains4, setRemains4] = useState<RewardType>({
-    SSS: 1,
-    SS: 2,
-    S: 4,
-    A: 9,
+  const [boards, setBoards] = useState({
+    4: createBoard(4),
+    5: createBoard(5),
+    7: createBoard(7),
   });
 
-  const [remains5, setRemains5] = useState<RewardType>({
-    SSS: 1,
-    SS: 2,
-    S: 4,
-    A: 6,
-    B: 12,
+  const [revealed, setRevealed] = useState({
+    4: Array.from({ length: 4 }, () => Array.from({ length: 4 }, () => false)),
+    5: Array.from({ length: 5 }, () => Array.from({ length: 5 }, () => false)),
+    7: Array.from({ length: 7 }, () => Array.from({ length: 7 }, () => false)),
   });
 
-  const [remains7, setRemains7] = useState<RewardType>({
-    SSS: 1,
-    SS: 2,
-    S: 4,
-    A: 6,
-    B: 16,
-    C: 20,
+  const [remains, setRemains] = useState<{
+    4: RewardType;
+    5: RewardType;
+    7: RewardType;
+  }>({
+    4: { SSS: 1, SS: 2, S: 4, A: 9 },
+    5: { SSS: 1, SS: 2, S: 4, A: 6, B: 12 },
+    7: { SSS: 1, SS: 2, S: 4, A: 6, B: 16, C: 20 },
   });
-
   const [collected, setCollected] = useState<RewardType>({
     SSS: 0,
     SS: 0,
@@ -68,111 +51,54 @@ function App() {
     B: 0,
     C: 0,
   });
+  const clickCellHandler = (x: number, y: number) => {
+    const boardKey = activeTab as keyof typeof remains;
 
-  const clickCellHandler4 = (x: number, y: number) => {
-    setRevealed4((prevReveald) => {
-      const newRevealed = [...prevReveald];
-      newRevealed[x] = [...newRevealed[x]];
-      newRevealed[x][y] = true;
+    setRevealed((prevRevealed) => {
+      const newRevealed = { ...prevRevealed };
+      newRevealed[boardKey][x][y] = true;
       return newRevealed;
     });
-    setRemains4((prevRemain) => {
-      const newRemain = { ...prevRemain };
-      const key = Board4[x][y] as keyof typeof prevRemain;
-      newRemain[key] -= 1;
-      return newRemain;
-    });
-    setCollected((prevCollected) => {
-      const newCollected = { ...prevCollected };
-      const key = Board4[x][y] as keyof typeof newCollected;
-      newCollected[key] += 1;
-      return newCollected;
-    });
-  };
 
-  const clickCellHandler5 = (x: number, y: number) => {
-    setRevealed5((prevReveald) => {
-      const newRevealed = [...prevReveald];
-      newRevealed[x] = [...newRevealed[x]];
-      newRevealed[x][y] = true;
-      return newRevealed;
+    setRemains((prevRemains) => {
+      const newRemain = { ...prevRemains[boardKey] };
+      const key = boards[boardKey][x][y] as keyof typeof newRemain;
+      newRemain[key] -= 1; // 해당 보상 감소
+      return { ...prevRemains, [boardKey]: newRemain };
     });
-    setRemains5((prevRemain) => {
-      const newRemain = { ...prevRemain };
-      const key = Board5[x][y] as keyof typeof prevRemain;
-      newRemain[key] -= 1;
-      return newRemain;
-    });
-    setCollected((prevCollected) => {
-      const newCollected = { ...prevCollected };
-      const key = Board5[x][y] as keyof typeof newCollected;
-      newCollected[key] += 1;
-      return newCollected;
-    });
-  };
 
-  const clickCellHandler7 = (x: number, y: number) => {
-    setRevealed7((prevReveald) => {
-      const newRevealed = [...prevReveald];
-      newRevealed[x] = [...newRevealed[x]];
-      newRevealed[x][y] = true;
-      return newRevealed;
-    });
-    setRemains7((prevRemain) => {
-      const newRemain = { ...prevRemain };
-      const key = Board7[x][y] as keyof typeof prevRemain;
-      newRemain[key] -= 1;
-      return newRemain;
-    });
     setCollected((prevCollected) => {
       const newCollected = { ...prevCollected };
-      const key = Board7[x][y] as keyof typeof newCollected;
+      const key = boards[boardKey][x][y] as keyof typeof newCollected;
       newCollected[key] += 1;
       return newCollected;
     });
   };
 
   const resetBoard = () => {
-    if (activeTab === 7) {
-      setBoard7(createBoard(7));
-      setRevealed7(
-        Array.from({ length: 7 }, () => Array.from({ length: 7 }, () => false))
-      );
-      setRemains7({
-        SSS: 1,
-        SS: 2,
-        S: 4,
-        A: 6,
-        B: 16,
-        C: 20,
-      });
-    }
-    if (activeTab === 5) {
-      setBoard5(createBoard(5));
-      setRevealed5(
-        Array.from({ length: 5 }, () => Array.from({ length: 5 }, () => false))
-      );
+    setBoards((prevBoards) => ({
+      ...prevBoards,
+      [activeTab]: createBoard(activeTab),
+    }));
 
-      setRemains5({
-        SSS: 1,
-        SS: 2,
-        S: 4,
-        A: 6,
-        B: 12,
-      });
-    }
-    if (activeTab === 4) {
-      setBoard4(createBoard(4));
-      setRevealed4(
-        Array.from({ length: 4 }, () => Array.from({ length: 4 }, () => false))
+    setRevealed((prevRevealed) => {
+      const newRevealed = { ...prevRevealed };
+      newRevealed[activeTab] = Array.from({ length: activeTab }, () =>
+        Array.from({ length: activeTab }, () => false)
       );
-      setRemains4({
-        SSS: 1,
-        SS: 2,
-        S: 4,
-        A: 9,
-      });
-    }
+      return newRevealed;
+    });
+
+    const defaultRemains = {
+      4: { SSS: 1, SS: 2, S: 4, A: 9 },
+      5: { SSS: 1, SS: 2, S: 4, A: 6, B: 12 },
+      7: { SSS: 1, SS: 2, S: 4, A: 6, B: 16, C: 20 },
+    };
+
+    setRemains((prevRemains) => ({
+      ...prevRemains,
+      [activeTab]: defaultRemains[activeTab],
+    }));
   };
 
   const resetCollected = () => {
@@ -193,36 +119,17 @@ function App() {
       <Tabs activeTab={activeTab} setActiveTab={setActiveTab} />
       <main className="main">
         <div className="remains">
-          {activeTab == 7 && <RemainCounts remains={remains7} />}
-          {activeTab == 5 && <RemainCounts remains={remains5} />}
-          {activeTab == 4 && <RemainCounts remains={remains4} />}
+          <RemainCounts remains={remains[activeTab]} />
         </div>
         <div className="boards">
-          {activeTab == 7 && (
-            <Board
-              board={Board7}
-              revealed={revealed7}
-              onClick={clickCellHandler7}
-            />
-          )}
-          {activeTab == 5 && (
-            <Board
-              board={Board5}
-              revealed={revealed5}
-              onClick={clickCellHandler5}
-            />
-          )}
-          {activeTab == 4 && (
-            <Board
-              board={Board4}
-              revealed={revealed4}
-              onClick={clickCellHandler4}
-            />
-          )}
+          <Board
+            board={boards[activeTab]}
+            revealed={revealed[activeTab]}
+            onClick={clickCellHandler}
+          />
         </div>
         <CollectedCount collections={collected} onClick={resetCollected} />
       </main>
-
       <ResetButton onClick={resetBoard} value="빙고판 초기화" />
     </>
   );
@@ -258,7 +165,6 @@ const AppStyle = createGlobalStyle`
     justify-content: space-around;
   }
 
-  
 `;
 
 export default App;
