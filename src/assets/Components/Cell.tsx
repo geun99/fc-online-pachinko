@@ -34,9 +34,9 @@ const backgroundImages = {
 };
 
 const cellSize = {
-  blue: "5rem",
-  red: "7.25rem",
-  yellow: "9.2195rem",
+  blue: "4.79rem",
+  red: "6.9rem",
+  yellow: "8.75rem",
 };
 
 type colorType = "blue" | "red" | "yellow";
