@@ -3,7 +3,7 @@ import styled from "styled-components";
 const Header = () => {
   return (
     <HeaderStyle>
-      <img src="/public/logo.png" alt="로고" />
+      <img src="/logo.png" alt="로고" />
       <h1>피파온라인4 파칭코 시뮬레이터</h1>
     </HeaderStyle>
   );
