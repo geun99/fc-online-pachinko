@@ -17,6 +17,6 @@ FC Online의 웹상점 "토끼 가족 송편 가게"의 시뮬레이터를 구�
 ## 정보 출처
 - [FC Online 웹상점]([https://maple.inven.co.kr](https://shop.fconline.nexon.com/Events/240829/TheThreeRabbit))
 
-![image](![image](https://github.com/user-attachments/assets/715e09b2-e534-436a-a02d-b9758bc64621))
+![image](https://github.com/user-attachments/assets/8ce19011-6534-4a5a-a75a-d74839644add)
 
 
