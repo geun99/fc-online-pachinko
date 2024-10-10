@@ -4,7 +4,7 @@ const Header = () => {
   return (
     <HeaderStyle>
       <img src="/logo.png" alt="로고" />
-      <h1>피파온라인4 파칭코 시뮬레이터</h1>
+      <h1>FC Online 파칭코 시뮬레이터</h1>
     </HeaderStyle>
   );
 };
