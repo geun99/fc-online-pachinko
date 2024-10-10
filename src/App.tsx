@@ -63,7 +63,7 @@ function App() {
     setRemains((prevRemains) => {
       const newRemain = { ...prevRemains[boardKey] };
       const key = boards[boardKey][x][y] as keyof typeof newRemain;
-      newRemain[key] -= 1; // 해당 보상 감소
+      newRemain[key] -= 1;
       return { ...prevRemains, [boardKey]: newRemain };
     });
 
