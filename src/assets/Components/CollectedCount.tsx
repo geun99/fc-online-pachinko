@@ -14,7 +14,7 @@ const CollectedCount = ({ collections, onClick }: CollectedCountProps) => {
       <div className="grid">
         {Object.keys(collections).map((collection) => {
           return (
-            <div>
+            <div key={collection}>
               <BoxStyle value={collection}>
                 {collection as keyof RewardType}
               </BoxStyle>

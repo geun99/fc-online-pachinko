@@ -13,7 +13,7 @@ const RemainCounts = ({ remains }: RemainCountsProps) => {
       <div className="grid">
         {Object.keys(remains).map((remain) => {
           return (
-            <div>
+            <div key={remain}>
               <BoxStyle value={remain}>{remain as keyof RewardType}</BoxStyle>
               {remains[remain as keyof RewardType]}개
             </div>

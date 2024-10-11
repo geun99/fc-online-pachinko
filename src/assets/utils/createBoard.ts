@@ -25,26 +25,46 @@ export const createBoard = (size: number): string[][] => {
   return board;
 };
 const placeCIn7x7 = (board: string[][]) => {
-  const selectedRow = Math.floor(Math.random() * 7);
+  const selectedIndices = selectNonAdjacentIndices(20, 49); // 1~49 중 서로 연속하지 않는 20개의 인덱스를 선택
 
-  const selectedIndices = selectNonAdjacentIndices(
-    2,
-    board[selectedRow].length
-  );
   selectedIndices.forEach((index) => {
-    board[selectedRow][index] = "C";
+    const row = Math.floor(index / 7); // 인덱스를 7x7 배열의 행과 열로 변환
+    const col = index % 7;
+    board[row][col] = "C";
   });
 
-  for (let row = 0; row < 7; row++) {
-    if (row !== selectedRow) {
-      const indices = selectNonAdjacentIndices(3, board[row].length);
-      indices.forEach((index) => {
-        board[row][index] = "C";
-      });
+  // 나머지 빈칸에 글자 채우기
+  fillRemainingLetters(board);
+};
+
+// 1~49 범위에서 연속되지 않는 인덱스를 선택하는 함수
+const selectNonAdjacentIndices = (count: number, size: number): number[] => {
+  const indices: number[] = [];
+  const availableIndices = Array.from({ length: size }, (_, i) => i);
+
+  while (indices.length < count && availableIndices.length > 0) {
+    const index = Math.floor(Math.random() * availableIndices.length);
+    const selectedIndex = availableIndices[index];
+
+    // 선택된 인덱스가 연속되지 않도록 확인
+    if (
+      !indices.includes(selectedIndex - 1) &&
+      !indices.includes(selectedIndex + 1)
+    ) {
+      indices.push(selectedIndex);
+      availableIndices.splice(index, 1); // 사용된 인덱스를 제거
+    } else {
+      // 연속된 인덱스를 발견했을 때, 사용 가능한 인덱스에서 제거
+      availableIndices.splice(index, 1);
+    }
+
+    // 선택할 수 있는 인덱스가 없을 경우 종료
+    if (availableIndices.length === 0 && indices.length < count) {
+      break; // 더 이상 선택할 수 없으므로 루프 종료
     }
   }
 
-  fillRemainingLetters(board);
+  return indices;
 };
 
 // 남은 위치에 글자 배치하는 함수
@@ -60,28 +80,6 @@ const fillRemainingLetters = (board: string[][]) => {
       }
     }
   }
-};
-
-// 주어진 개수만큼 비어있는 인덱스를 선택하는 함수
-const selectNonAdjacentIndices = (count: number, size: number): number[] => {
-  const indices: number[] = [];
-  const availableIndices = Array.from({ length: size }, (_, i) => i);
-
-  while (indices.length < count && availableIndices.length > 0) {
-    const index = Math.floor(Math.random() * availableIndices.length);
-    const selectedIndex = availableIndices[index];
-
-    // 선택한 인덱스가 이전 또는 다음 인덱스와 인접해 있는지 확인
-    if (
-      !indices.includes(selectedIndex - 1) &&
-      !indices.includes(selectedIndex + 1)
-    ) {
-      indices.push(selectedIndex);
-      availableIndices.splice(index, 1); // 선택된 인덱스를 사용 가능 인덱스에서 제거
-    }
-  }
-
-  return indices;
 };
 
 // 사이즈에 따라 배치할 글자 배열을 반환하는 함수

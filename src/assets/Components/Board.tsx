@@ -28,6 +28,7 @@ const Board = ({ board, revealed, onClick }: BoardProps) => {
               idx={rowIdx * board.length + (colIdx + 1)}
               revealed={revealed[rowIdx][colIdx]}
               color={color}
+              key={colIdx}
               onClick={() => {
                 onClick(rowIdx, colIdx);
               }}
