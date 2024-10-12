@@ -1,14 +1,25 @@
 import styled from "styled-components";
-import bg from "../../../public/bg_section1.jpg";
+import bg from "../../../public/bgImg.png";
 import { VALUE_COLORS } from "../utils/constants";
+import { useEffect, useState } from "react";
+
 interface ModalProps {
   value: string;
   onClick: () => void;
 }
 
 const Modal = ({ value, onClick }: ModalProps) => {
+  const [animate, setAnimate] = useState<boolean>(false);
+
+  useEffect(() => {
+    setAnimate(true);
+    const timeOut = setTimeout(() => setAnimate(false), 1000);
+
+    return () => clearTimeout(timeOut);
+  }, []);
+
   return (
-    <ModalStyle value={value}>
+    <ModalStyle value={value} animate={animate}>
       <div className="box">
         <p>{value}</p>
       </div>
@@ -17,7 +28,7 @@ const Modal = ({ value, onClick }: ModalProps) => {
   );
 };
 
-const ModalStyle = styled.div<{ value: string }>`
+const ModalStyle = styled.div<{ value: string; animate: boolean }>`
   position: fixed;
   top: 0;
   left: 0;
@@ -56,8 +67,22 @@ const ModalStyle = styled.div<{ value: string }>`
 
     p {
       color: ${({ value }) => VALUE_COLORS[value as keyof typeof VALUE_COLORS]};
-      font-size: 15rem;
+      font-size: 8rem;
       font-weight: bolder;
+      transform: translateY(-3.5rem);
+      ${({ animate }) =>
+        animate &&
+        `animation: scaleAnimation 1s ease-in forwards;
+      `}
+    }
+  }
+
+  @keyframes scaleAnimation {
+    0% {
+      transform: translateY(-3.5rem) scale(1.5);
+    }
+    100% {
+      transform: translateY(-3.5rem) scale(1);
     }
   }
 `;
