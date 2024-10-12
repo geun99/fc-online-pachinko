@@ -42,7 +42,7 @@ const Cell = ({ value, idx, revealed, color, isHint, onClick }: CellProps) => {
         alt={colorValue}
       />
       <p>{idx}</p>
-      {isHint && (
+      {isHint && color === "blue" && (
         <HintBox>
           <span>B등급 이상</span>
         </HintBox>
@@ -64,7 +64,8 @@ const CellStyle = styled.div<{
   border-radius: 1rem;
   align-items: ${({ revealed }) => (revealed ? "center" : "end")};
   justify-content: center;
-  border: ${({ isHint }) => isHint && "2px solid #ECFF08"};
+  border: ${({ isHint, color }) =>
+    isHint && color == "blue" && "2px solid #ECFF08"};
   font-weight: bolder;
   background-color: ${({ color, value }) =>
     value
@@ -87,7 +88,7 @@ const CellStyle = styled.div<{
     bottom: 0;
     background-color: rgba(123, 132, 19, 0.5);
     border-radius: 1rem;
-    opacity: ${({ isHint }) => (isHint ? 1 : 0)};
+    opacity: ${({ isHint, color }) => (color === "blue" && isHint ? 1 : 0)};
     pointer-events: none;
     transition: opacity 0.2s ease;
   }
