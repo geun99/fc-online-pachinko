@@ -8,6 +8,7 @@ import ResetButton from "./assets/Components/ResetButton";
 import RemainCounts from "./assets/Components/RemainCounts";
 import CollectedCount from "./assets/Components/CollectedCount";
 import Modal from "./assets/Components/Modal";
+import { DEFAULT_COUNTS, EMPTY_COUNT } from "./assets/utils/constants";
 
 export type tabType = 4 | 5 | 7;
 
@@ -19,12 +20,6 @@ export interface RewardType {
   B?: number;
   C?: number;
 }
-
-const DEFAULT_COUNTS = {
-  4: { SSS: 1, SS: 2, S: 4, A: 9 },
-  5: { SSS: 1, SS: 2, S: 4, A: 6, B: 12 },
-  7: { SSS: 1, SS: 2, S: 4, A: 6, B: 16, C: 20 },
-};
 
 function App() {
   const [activeTab, setActiveTab] = useState<tabType>(7);
@@ -41,19 +36,16 @@ function App() {
     7: Array.from({ length: 7 }, () => Array.from({ length: 7 }, () => false)),
   });
 
+  const [hint, setHint] = useState<boolean[][]>(
+    Array.from({ length: 7 }, () => Array.from({ length: 7 }, () => false))
+  );
+
   const [remains, setRemains] = useState<{
     4: RewardType;
     5: RewardType;
     7: RewardType;
   }>(DEFAULT_COUNTS);
-  const [collected, setCollected] = useState<RewardType>({
-    SSS: 0,
-    SS: 0,
-    S: 0,
-    A: 0,
-    B: 0,
-    C: 0,
-  });
+  const [collected, setCollected] = useState<RewardType>(EMPTY_COUNT);
 
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [modalValue, setModalValue] = useState<string>("");
@@ -71,6 +63,37 @@ function App() {
     const boardKey = activeTab as keyof typeof remains;
     const cellValue = boards[boardKey][x][y];
     openModal(cellValue);
+
+    if (cellValue === "C") {
+      setHint((prevHint) => {
+        const newHint = [...prevHint];
+        const idx = x * 7 + y;
+        const prevIdx = idx - 1;
+        const nextIdx = idx + 1;
+        const boardSize = boards[boardKey][x].length;
+
+        if (
+          prevIdx >= 0 &&
+          !revealed[boardKey][Math.floor(prevIdx / boardSize)][
+            prevIdx % boardSize
+          ]
+        ) {
+          newHint[Math.floor(prevIdx / boardSize)][prevIdx % boardSize] = true;
+        }
+
+        if (
+          nextIdx < boardSize * boardSize &&
+          !revealed[boardKey][Math.floor(nextIdx / boardSize)][
+            nextIdx % boardSize
+          ]
+        ) {
+          newHint[Math.floor(nextIdx / boardSize)][nextIdx % boardSize] = true;
+        }
+
+        return newHint;
+      });
+    }
+
     setRevealed((prevRevealed) => {
       const newRevealed = { ...prevRevealed };
       newRevealed[boardKey][x][y] = true;
@@ -113,14 +136,7 @@ function App() {
   };
 
   const resetCollected = () => {
-    setCollected({
-      SSS: 0,
-      SS: 0,
-      S: 0,
-      A: 0,
-      B: 0,
-      C: 0,
-    });
+    setCollected(EMPTY_COUNT);
   };
 
   return (
@@ -137,6 +153,7 @@ function App() {
           <Board
             board={boards[activeTab]}
             revealed={revealed[activeTab]}
+            hint={hint}
             onClick={clickCellHandler}
           />
         </div>

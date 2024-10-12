@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { valueColors } from "./Cell";
 import bg from "../../../public/bg_section1.jpg";
+import { VALUE_COLORS } from "../utils/constants";
 interface ModalProps {
   value: string;
   onClick: () => void;
@@ -55,7 +55,7 @@ const ModalStyle = styled.div<{ value: string }>`
     margin-bottom: 2rem;
 
     p {
-      color: ${({ value }) => valueColors[value as keyof typeof valueColors]};
+      color: ${({ value }) => VALUE_COLORS[value as keyof typeof VALUE_COLORS]};
       font-size: 15rem;
       font-weight: bolder;
     }

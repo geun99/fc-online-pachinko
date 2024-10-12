@@ -1,19 +1,15 @@
 import styled from "styled-components";
 import Cell from "./Cell";
+import { BACKGROUND_COLORS } from "../utils/constants";
 
 interface BoardProps {
   board: string[][];
   revealed: boolean[][];
+  hint: boolean[][];
   onClick: (x: number, y: number) => void;
 }
 
-const backgroundColor = {
-  7: "#14423D",
-  5: "#612533",
-  4: "#674600",
-};
-
-const Board = ({ board, revealed, onClick }: BoardProps) => {
+const Board = ({ board, revealed, hint, onClick }: BoardProps) => {
   let color = "";
   if (board.length === 7) color = "blue";
   else if (board.length === 5) color = "red";
@@ -29,6 +25,7 @@ const Board = ({ board, revealed, onClick }: BoardProps) => {
               revealed={revealed[rowIdx][colIdx]}
               color={color}
               key={colIdx}
+              isHint={hint[rowIdx][colIdx]}
               onClick={() => {
                 onClick(rowIdx, colIdx);
               }}
@@ -47,7 +44,7 @@ const BoardStyle = styled.div<{ size: number }>`
   padding: 0.5rem;
   border-radius: 1rem;
   background-color: ${({ size }) =>
-    backgroundColor[size as keyof typeof backgroundColor]};
+    BACKGROUND_COLORS[size as keyof typeof BACKGROUND_COLORS]};
 `;
 
 export default Board;

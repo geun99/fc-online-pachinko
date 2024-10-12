@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { RewardType } from "../../App";
-import { valueColors } from "./Cell";
+import { VALUE_COLORS } from "../utils/constants";
 
 interface RemainCountsProps {
   remains: RewardType;
@@ -44,7 +44,7 @@ export const BoxStyle = styled.div<{ value: string }>`
   font-size: 2.5rem;
   font-weight: 800;
   background-color: ${({ value }) =>
-    valueColors[value as keyof typeof valueColors]};
+    VALUE_COLORS[value as keyof typeof VALUE_COLORS]};
   border-radius: 1rem;
 `;
 
