@@ -90,14 +90,15 @@ const CellStyle = styled.div<{
     border-radius: 1rem;
     opacity: ${({ isHint, color }) => (color === "blue" && isHint ? 1 : 0)};
     pointer-events: none;
-    transition: opacity 0.2s ease;
   }
 
   img {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100%;
+    width: ${({ isHint }) =>
+      isHint ? "105%" : "100%"}; // 수정된 부분: 조건부 너비 설정
+
     &:hover {
       animation: bounce 1.5s ease-in-out infinite;
     }
