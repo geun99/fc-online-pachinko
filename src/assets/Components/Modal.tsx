@@ -72,7 +72,7 @@ const ModalStyle = styled.div<{ value: string; animate: boolean }>`
       transform: translateY(-3.5rem);
       ${({ animate }) =>
         animate &&
-        `animation: scaleAnimation 1s ease-in forwards;
+        `animation: scaleAnimation 0.5s linear forwards;
       `}
     }
   }
