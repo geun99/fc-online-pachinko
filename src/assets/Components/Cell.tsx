@@ -50,7 +50,11 @@ const Cell = ({ value, idx, revealed, color, onClick }: CellProps) => {
     </CellStyle>
   ) : (
     <CellStyle onClick={onClick} color={colorValue}>
-      {idx}
+      <img
+        src={backgroundImages[color as keyof typeof backgroundImages]}
+        alt={colorValue}
+      />
+      <p>{idx}</p>
     </CellStyle>
   );
 };
@@ -66,7 +70,6 @@ const CellStyle = styled.div<{
   border-radius: 1rem;
   align-items: ${({ revealed }) => (revealed ? "center" : "end")};
   justify-content: center;
-  color: ${({ value }) => (value ? "white" : "black")};
 
   background-color: ${({ color, value }) =>
     value
@@ -83,11 +86,36 @@ const CellStyle = styled.div<{
   font-weight: bold;
   cursor: ${({ revealed }) => (revealed ? "default" : "pointer")};
 
-  background-image: ${({ revealed, color }) =>
-    revealed ? "none" : `url(${backgroundImages[color]})`};
+  img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    &:hover {
+      animation: bounce 1.5s ease-in-out infinite;
+    }
+  }
 
-  background-size: cover;
-  background-position: center;
+  p {
+    position: absolute;
+    color: black;
+  }
+
+  @keyframes bounce {
+    0%,
+    20% {
+      transform: translateY(0);
+    }
+    15% {
+      transform: translateY(-5px);
+    }
+    10% {
+      transform: translateY(0);
+    }
+    5% {
+      transform: translateY(-10px);
+    }
+  }
 `;
 
 export default Cell;
