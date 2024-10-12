@@ -1,7 +1,13 @@
 export const COLORS = {
   blue: "#00606D",
-  red: "#7B343D",
-  yellow: "#895800",
+  red: "#55222E",
+  yellow: "#593D01",
+};
+
+export const SECOND_COLORS = {
+  blue: "#0E3833",
+  red: "#752C3E",
+  yellow: "#785201",
 };
 
 export const BORDERS = {
@@ -17,6 +23,12 @@ export const VALUE_COLORS = {
   A: "#319127",
   B: "#C46623",
   C: "#676767",
+};
+
+export const BOARD_NAME = {
+  7: "아빠 토끼",
+  5: "엄마 토끼",
+  4: "아기 토끼",
 };
 
 export const BACKGROUND_COLORS = {

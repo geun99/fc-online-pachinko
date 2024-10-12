@@ -1,25 +1,27 @@
 import styled from "styled-components";
+import { BACKGROUND_COLORS, BOARD_NAME } from "../utils/constants";
 
 interface TabProps {
   isActive: boolean;
   handleTabActive: () => void;
-  label: number;
+  label: 4 | 5 | 7;
 }
 
 const Tab = ({ isActive, handleTabActive, label }: TabProps) => {
   return (
-    <TabStyle isActive={isActive} onClick={handleTabActive}>
-      {label + " X " + label}
+    <TabStyle label={label} isActive={isActive} onClick={handleTabActive}>
+      {BOARD_NAME[label]}
     </TabStyle>
   );
 };
 
-const TabStyle = styled.button<{ isActive: boolean }>`
+const TabStyle = styled.button<{ isActive: boolean; label: 4 | 5 | 7 }>`
   width: 8rem;
   height: 3rem;
   font-size: 1.25rem;
   margin: 2rem;
-  background-color: ${({ isActive }) => (isActive ? "green" : "gray")};
+  background-color: ${({ isActive, label }) =>
+    isActive ? BACKGROUND_COLORS[label] : "gray"};
   border: none;
   border-radius: 0.25rem;
   cursor: pointer;

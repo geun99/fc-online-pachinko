@@ -3,7 +3,12 @@ import styled from "styled-components";
 import son from "../../../public/son.png";
 import papa from "../../../public/papa.png";
 import mom from "../../../public/mom.png";
-import { BORDERS, COLORS, VALUE_COLORS } from "../utils/constants";
+import {
+  BORDERS,
+  COLORS,
+  SECOND_COLORS,
+  VALUE_COLORS,
+} from "../utils/constants";
 
 interface CellProps {
   value: string;
@@ -67,10 +72,11 @@ const CellStyle = styled.div<{
   border: ${({ isHint, color }) =>
     isHint && color == "blue" && "2px solid #ECFF08"};
   font-weight: bolder;
-  background-color: ${({ color, value }) =>
+
+  background: ${({ color, value }) =>
     value
-      ? VALUE_COLORS[value as keyof typeof VALUE_COLORS] || COLORS[color]
-      : COLORS[color]};
+      ? VALUE_COLORS[value as keyof typeof VALUE_COLORS]
+      : `linear-gradient(135deg, ${COLORS[color]} 50%, ${SECOND_COLORS[color]} 50%)`};
   font-size: ${({ color, value }) => {
     if (color === "blue") return value ? "2.5rem" : "2.25rem";
     if (color === "red") return value ? "3.75rem" : "2.5rem";
@@ -96,8 +102,7 @@ const CellStyle = styled.div<{
     display: flex;
     justify-content: center;
     align-items: center;
-    width: ${({ isHint }) =>
-      isHint ? "105%" : "100%"}; // 수정된 부분: 조건부 너비 설정
+    width: ${({ isHint }) => (isHint ? "105%" : "100%")};
 
     &:hover {
       animation: bounce 1.5s ease-in-out infinite;
