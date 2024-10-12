@@ -20,7 +20,8 @@ FC Online의 웹상점 "토끼 가족 송편 가게"의 시뮬레이터를 구�
 ## 기능 소개
 ![image](https://github.com/user-attachments/assets/e8ca76ff-0797-409e-b4e4-d6af0e2f90a5)
 상단 탭 버튼을 통해 빙고판을 변경할 수 있습니다. <br/> 
-빙고판을 변경해도 이전 빙고판의 정보는 기억되어 자유롭게 왔다갔다 할 수 있습니다.
+빙고판을 변경해도 이전 빙고판의 정보는 기억되어 자유롭게 왔다갔다 할 수 있습니다.<br/>
+빙고판에 마우스를 올리면(hover) 토끼가 위로 통통 튀는 애니메이션이 동작합니다.
 
 ![image](https://github.com/user-attachments/assets/342324ce-ddfd-48b3-a5af-cf252fad9817)
 아빠토끼 빙고판의 경우 연속된 숫자의 보상이 모두 C인 경우는 없습니다. <br/>
