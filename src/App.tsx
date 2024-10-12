@@ -7,6 +7,7 @@ import { createBoard } from "./assets/utils/createBoard";
 import ResetButton from "./assets/Components/ResetButton";
 import RemainCounts from "./assets/Components/RemainCounts";
 import CollectedCount from "./assets/Components/CollectedCount";
+import Modal from "./assets/Components/Modal";
 
 export type tabType = 4 | 5 | 7;
 
@@ -51,9 +52,23 @@ function App() {
     B: 0,
     C: 0,
   });
+
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [modalValue, setModalValue] = useState<string>("");
+
+  const openModal = (value: string) => {
+    setIsModalOpen(true);
+    setModalValue(value);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
   const clickCellHandler = (x: number, y: number) => {
     const boardKey = activeTab as keyof typeof remains;
-
+    const cellValue = boards[boardKey][x][y];
+    openModal(cellValue);
     setRevealed((prevRevealed) => {
       const newRevealed = { ...prevRevealed };
       newRevealed[boardKey][x][y] = true;
@@ -115,6 +130,7 @@ function App() {
   return (
     <>
       <AppStyle />
+      {isModalOpen && <Modal value={modalValue} onClick={closeModal} />}
       <Header />
       <Tabs activeTab={activeTab} setActiveTab={setActiveTab} />
       <main className="main">
