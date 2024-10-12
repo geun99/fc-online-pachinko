@@ -20,6 +20,12 @@ export interface RewardType {
   C?: number;
 }
 
+const DEFAULT_COUNTS = {
+  4: { SSS: 1, SS: 2, S: 4, A: 9 },
+  5: { SSS: 1, SS: 2, S: 4, A: 6, B: 12 },
+  7: { SSS: 1, SS: 2, S: 4, A: 6, B: 16, C: 20 },
+};
+
 function App() {
   const [activeTab, setActiveTab] = useState<tabType>(7);
 
@@ -39,11 +45,7 @@ function App() {
     4: RewardType;
     5: RewardType;
     7: RewardType;
-  }>({
-    4: { SSS: 1, SS: 2, S: 4, A: 9 },
-    5: { SSS: 1, SS: 2, S: 4, A: 6, B: 12 },
-    7: { SSS: 1, SS: 2, S: 4, A: 6, B: 16, C: 20 },
-  });
+  }>(DEFAULT_COUNTS);
   const [collected, setCollected] = useState<RewardType>({
     SSS: 0,
     SS: 0,
@@ -104,15 +106,9 @@ function App() {
       return newRevealed;
     });
 
-    const defaultRemains = {
-      4: { SSS: 1, SS: 2, S: 4, A: 9 },
-      5: { SSS: 1, SS: 2, S: 4, A: 6, B: 12 },
-      7: { SSS: 1, SS: 2, S: 4, A: 6, B: 16, C: 20 },
-    };
-
     setRemains((prevRemains) => ({
       ...prevRemains,
-      [activeTab]: defaultRemains[activeTab],
+      [activeTab]: DEFAULT_COUNTS[activeTab],
     }));
   };
 

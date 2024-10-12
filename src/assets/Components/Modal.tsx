@@ -37,6 +37,7 @@ const ModalStyle = styled.div<{ value: string }>`
     color: #04824b;
     border: 1px solid #04824b;
     font-size: 1.25rem;
+    cursor: pointer;
   }
 
   .box {

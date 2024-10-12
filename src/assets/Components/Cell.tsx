@@ -18,6 +18,12 @@ const colors = {
   yellow: "#895800",
 };
 
+const borders = {
+  blue: "#44B0B2",
+  red: "#FFFFFF",
+  yellow: "#FFEC1B",
+};
+
 export const valueColors = {
   SSS: "#FF4696",
   SS: "#8237CD",
@@ -99,6 +105,8 @@ const CellStyle = styled.div<{
   p {
     position: absolute;
     color: black;
+    text-shadow: ${({ color }) =>
+      `-1px -1px 0 ${borders[color]}, 1px -1px 0 ${borders[color]}, -1px 1px 0 ${borders[color]}, 1px 1px 0 ${borders[color]}`};
   }
 
   @keyframes bounce {
