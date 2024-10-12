@@ -133,6 +133,10 @@ function App() {
       ...prevRemains,
       [activeTab]: DEFAULT_COUNTS[activeTab],
     }));
+
+    setHint(
+      Array.from({ length: 7 }, () => Array.from({ length: 7 }, () => false))
+    );
   };
 
   const resetCollected = () => {
