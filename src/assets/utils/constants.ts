@@ -1,11 +1,11 @@
 export const COLORS = {
-  blue: "#00606D",
+  blue: "#0E3833",
   red: "#55222E",
   yellow: "#593D01",
 };
 
 export const SECOND_COLORS = {
-  blue: "#0E3833",
+  blue: "#00606D",
   red: "#752C3E",
   yellow: "#785201",
 };

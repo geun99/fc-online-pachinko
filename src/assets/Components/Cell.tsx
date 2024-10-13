@@ -92,7 +92,7 @@ const CellStyle = styled.div<{
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(123, 132, 19, 0.5);
+    background-color: rgba(0, 0, 0, 0.42);
     border-radius: 1rem;
     opacity: ${({ isHint, color }) => (color === "blue" && isHint ? 1 : 0)};
     pointer-events: none;
